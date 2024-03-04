@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from input_related import url_ist, url_id
+import os
 
 
 def get_html_content(url, save_path='demo.html'):
@@ -35,18 +36,31 @@ def parse_html_content(html):
 
 
 def save_articles(url_id_, title, div_text):
-    output_file_path = f"{url_id_}.txt"
+    output_folder = 'text_output_file'
+    os.makedirs(output_folder, exist_ok=True)
+    output_file_path = os.path.join(output_folder, f"{url_id_}.txt")
     with open(output_file_path, 'w', encoding='utf-8') as output_file:
         output_file.write(title + '\n')
-        output_file.write(div_text[0])
+        if div_text:  # Check if div_text is not empty
+            output_file.write(div_text[0])
 
 
 # Example usage
-url = url_ist[0]
+for i in range(len(url_id)):
+    try:
+        url = url_ist[i]
+        get_html_content(url)
+        html_content = read_html_file()
+        title, div_texts = parse_html_content(html_content)
+        save_articles(url_id[i], title, div_texts)
+    except Exception as e:
+        print(f"An error occurred for URL_ID {url_id[i]}: {str(e)}")
+
+'''url = url_ist[13]
 get_html_content(url)
 html_content = read_html_file()
 title, div_texts = parse_html_content(html_content)
-save_articles(url_id[0], title, div_texts)
+save_articles(url_id[13], title, div_texts)'''
 
 
 
