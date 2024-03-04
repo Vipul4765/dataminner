@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-from input_related import url_ist
+from input_related import url_ist, url_id
 
 
 def get_html_content(url, save_path='demo.html'):
@@ -34,7 +34,11 @@ def parse_html_content(html):
     return title, div_texts
 
 
-
+def save_articles(url_id_, title, div_text):
+    output_file_path = f"{url_id_}.txt"
+    with open(output_file_path, 'w', encoding='utf-8') as output_file:
+        output_file.write(title + '\n')
+        output_file.write(div_text[0])
 
 
 # Example usage
@@ -42,6 +46,7 @@ url = url_ist[0]
 get_html_content(url)
 html_content = read_html_file()
 title, div_texts = parse_html_content(html_content)
+save_articles(url_id[0], title, div_texts)
 
 
 
