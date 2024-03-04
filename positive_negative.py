@@ -17,4 +17,4 @@ dict_pos_neg = {
     'Positive_Words' : pos_word_res,
     'Negative_Words' : neg_word_res
 }
-print(dict_pos_neg)
+
